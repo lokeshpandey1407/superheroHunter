@@ -79,7 +79,7 @@ function createCharacterCard(character) {
   Title.textContent = character.name;
   const AFButton = document.createElement("button");
   AFButton.classList.add("add-to-favorite");
-  AFButton.textContent = "Add To Favorite";
+  AFButton.textContent = "Add To Favourite";
   AFButton.addEventListener("click", () => addToFavourites(character));
 
   CharacterCard.appendChild(ImageContainer);
