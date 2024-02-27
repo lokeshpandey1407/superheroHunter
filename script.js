@@ -15,7 +15,7 @@ let loading = true;
 let filterText = "";
 let AllCharacters = [];
 let FilteredCharacter = [];
-let FavoriteCharacters = [];
+let FavoritesCharacters = [];
 
 async function fetchAllCharacters() {
   loading = true;
@@ -80,11 +80,14 @@ function createCharacterCard(character) {
   const AFButton = document.createElement("button");
   AFButton.classList.add("add-to-favorite");
   AFButton.textContent = "Add To Favorite";
-  // AFButton.addEventListener('click', () => addToFavorites(AFButton, card));
+  AFButton.addEventListener("click", () => addToFavourites(character));
 
   CharacterCard.appendChild(ImageContainer);
   CharacterCard.appendChild(Title);
   CharacterCard.appendChild(AFButton);
+  Title.addEventListener("click", function () {
+    window.location.href = `character-details.html?id=${character.id}`;
+  });
   return CharacterCard;
 }
 
@@ -134,3 +137,25 @@ SearchButton.addEventListener("click", function (e) {
   e.preventDefault();
   handleSearchCharacters();
 });
+
+function addToFavourites(item) {
+  saveToLocalStorage(item);
+  alert("Added to Favourite");
+}
+
+function saveToLocalStorage(item) {
+  if (localStorage.getItem("favourites")) {
+    let favourites = JSON.parse(localStorage.getItem("favourites"));
+    let isPresent = favourites.find((fav) => {
+      return item.id === fav.id;
+    });
+    if (!isPresent) {
+      favourites.push(item);
+    }
+    localStorage.setItem("favourites", JSON.stringify(favourites));
+  } else {
+    let favourites = [];
+    favourites.push(item);
+    localStorage.setItem("favourites", JSON.stringify(favourites));
+  }
+}
