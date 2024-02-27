@@ -6,6 +6,7 @@ const hash = CryptoJS.MD5(ts + private_key + public_key).toString();
 const MainContainer = document.querySelector("main");
 let CharacterDetails = {};
 
+//Getting the id from the url
 function getCharacter() {
   const urlParams = new URLSearchParams(window.location.search);
   if (urlParams.has("id")) {
@@ -34,6 +35,7 @@ function characterComicsDetailsGenerator(key, character) {
   return Container;
 }
 
+//Creating Character Content page
 function createCharacterContent(character) {
   const ThumbnailSection = document.createElement("section");
   ThumbnailSection.id = "thumbnail";
@@ -70,6 +72,7 @@ function createCharacterContent(character) {
   MainContainer.appendChild(CharacterInfoSection);
 }
 
+//Fetching Character details from an api using id
 async function fetchCharacterDetails(id) {
   loading = true;
   const url = `https://gateway.marvel.com:443/v1/public/characters/${id}?ts=${ts}&apikey=${public_key}&hash=${hash}`;

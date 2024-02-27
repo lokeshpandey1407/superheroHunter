@@ -64,7 +64,6 @@ function createCharacterCard(character) {
     "src",
     `${character.thumbnail.path}.${character.thumbnail.extension}`
   );
-  //add scr attribute when the data comes
   const ImageDescription = document.createElement("p");
   ImageDescription.classList.add("character-description");
   if (character.description != "") {
