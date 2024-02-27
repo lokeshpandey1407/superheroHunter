@@ -28,7 +28,7 @@ function createCharacterCard(character) {
   const RFButton = document.createElement("button");
   RFButton.classList.add("add-to-favorite");
   RFButton.textContent = "Remove From Favourite";
-  // RFButton.addEventListener("click", () => removeFromFavourites(character));
+  RFButton.addEventListener("click", () => removeFromFavourites(character));
 
   CharacterCard.appendChild(ImageContainer);
   CharacterCard.appendChild(Title);
@@ -41,9 +41,12 @@ function createCharacterCard(character) {
 
 function renderCharacterCards(AllCharacters) {
   CharactersContainer.innerHTML = "";
-  if (loading && AllCharacters.length == 0) {
+  if (loading) {
     const loader = createLoader();
     CharactersContainer.appendChild(loader);
+  } else if (!loading && AllCharacters.length == 0) {
+    const EmptyElem = createEmptyPage();
+    CharactersContainer.appendChild(EmptyElem);
   } else {
     AllCharacters.forEach((character) => {
       const Card = createCharacterCard(character);
@@ -58,8 +61,28 @@ function createLoader() {
   return loading;
 }
 
+function createEmptyPage() {
+  const EmptyElem = document.createElement("div");
+  EmptyElem.textContent = "No Favourites here. Back to ";
+  const ReturnHomeElement = document.createElement("a");
+  ReturnHomeElement.href = "index.html";
+  ReturnHomeElement.textContent = "home";
+  EmptyElem.appendChild(ReturnHomeElement);
+  return EmptyElem;
+}
+
+function removeFromFavourites(item) {
+  let favourites = JSON.parse(localStorage.getItem("favourites"));
+  let filteredFavourites = favourites.filter((fav) => {
+    return fav.id != item.id;
+  });
+  localStorage.setItem("favourites", JSON.stringify(filteredFavourites));
+  renderFavouritePage();
+}
+
 function renderFavouritePage() {
   let favorites = JSON.parse(localStorage.getItem("favourites"));
+  loading = false;
   renderCharacterCards(favorites);
 }
 

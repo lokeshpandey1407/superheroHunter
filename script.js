@@ -132,6 +132,7 @@ function handleSearchCharacters() {
 
 document.addEventListener("DOMContentLoaded", () => {
   fetchAllCharacters();
+  SearchInput.value = "";
 });
 SearchButton.addEventListener("click", function (e) {
   e.preventDefault();
